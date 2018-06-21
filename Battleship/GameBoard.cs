@@ -14,6 +14,7 @@ namespace Battleship
         public char background;
         public char hit;
         public char miss;
+        public char ship;
         char[,] board;
 
         //constructor
@@ -24,6 +25,7 @@ namespace Battleship
             background = '~';
             hit = 'X';
             miss = 'O';
+            ship = 'N';
 
             board = new char[sizeX, sizeY];
 
@@ -31,7 +33,7 @@ namespace Battleship
             {
                 for (int j = 0; j < sizeY; j++)
                 {
-                    board[i, j] = background;
+                    board[j, i] = background;
                 }
             }
         }
@@ -100,6 +102,129 @@ namespace Battleship
                     return 'T';
                 default:
                     return 'A';
+            }
+        }
+
+        public int[] ConvertCoordinatesToIndex(char[] coordinates)
+        {
+            int[] index = new int[2];
+            index[0] = ConvertCharToInt(coordinates[1]);
+            index[1] = ConvertCharToInt(coordinates[0]);
+
+            return index;
+        }
+
+        public int ConvertCharToInt(char character)
+        {
+            switch (character)
+            {
+                case 'a':
+                    return 0;
+                case 'b':
+                    return 1;
+                case 'c':
+                    return 2;
+                case 'd':
+                    return 3;
+                case 'e':
+                    return 4;
+                case 'f':
+                    return 5;
+                case 'g':
+                    return 6;
+                case 'h':
+                    return 7;
+                case 'i':
+                    return 8;
+                case 'j':
+                    return 9;
+                case 'k':
+                    return 10;
+                case 'l':
+                    return 11;
+                case 'm':
+                    return 12;
+                case 'n':
+                    return 13;
+                case 'o':
+                    return 14;
+                case 'p':
+                    return 15;
+                case 'q':
+                    return 16;
+                case 'r':
+                    return 17;
+                case 's':
+                    return 18;
+                case 't':
+                    return 19;
+                default:
+                    return 0;
+            }
+        }
+
+        public bool FindIfShipFits(char[] coordinatesChar, string direction, int shipSize)
+        {
+            int[] coordinates = new int[2];
+            coordinates = ConvertCoordinatesToIndex(coordinatesChar);
+
+            switch (direction)
+            {
+                case "up":
+                    if (coordinates[1] - (shipSize - 1) >= 0)
+                    {
+                        for(int i = 0; i < shipSize; i++)
+                        {
+                            board[coordinates[0], coordinates[1] - i] = ship;
+                        }
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case "down":
+                    if (coordinates[1] + (shipSize - 1) < sizeY)
+                    {
+                        for (int i = 0; i < shipSize; i++)
+                        {
+                            board[coordinates[0], coordinates[1] + i] = ship;
+                        }
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case "left":
+                    if (coordinates[0] - (shipSize - 1) >= 0)
+                    {
+                        for (int i = 0; i < shipSize; i++)
+                        {
+                            board[coordinates[0] - i, coordinates[1]] = ship;
+                        }
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case "right":
+                    if (coordinates[0] + (shipSize - 1) < sizeX)
+                    {
+                        for (int i = 0; i < shipSize; i++)
+                        {
+                            board[coordinates[0] + i, coordinates[1]] = ship;
+                        }
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                default:
+                    Console.WriteLine("\n\nDirection was invalid.\n\n");
+                    return false;
             }
         }
     }

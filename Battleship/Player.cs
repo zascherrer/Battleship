@@ -34,6 +34,7 @@ namespace Battleship
             {
                 DisplayShipsRemaining();
                 shipChosen = ChooseShip();
+                PlaceShipOnBoard(shipChosen);
                 RemoveShipFromShips(shipChosen);
             }
 
@@ -90,5 +91,76 @@ namespace Battleship
             }
         }
 
+        public void PlaceShipOnBoard(string shipChosen)
+        {
+            char[] coordinates = new char[2];
+            string chosenDirection;
+            bool isValidDirection = false;
+
+            Console.WriteLine("\n\nWhere would you like to place the ship? Type the X-coordinate followed by the Y-coordinate of where you want to place one end of the ship.\n\n");
+            coordinates = GetCoordinates(playerBoards[0]);
+
+            while (!isValidDirection)
+            {
+                Console.WriteLine("\n\nWould you like to place the ship facing up, down, left or right?");
+                chosenDirection = Console.ReadLine().ToLower();
+                if (ValidateDirection(chosenDirection))
+                {
+                    if (playerBoards[0].FindIfShipFits(coordinates, chosenDirection, ConvertStringToShip(shipChosen).size))
+                    {
+                        isValidDirection = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("\n\nThe ship doesn't fit there!\n\n");
+                    }
+                }
+            }
+        }
+
+        public char[] GetCoordinates(GameBoard board)
+        {
+            char[] coordinates = new char[2];
+
+            board.DisplayBoard();
+            coordinates[0] = Console.ReadLine()[0];
+            coordinates[1] = Console.ReadLine()[0];
+
+            return coordinates;
+        }
+
+        public bool ValidateDirection(string direction)
+        {
+            switch (direction)
+            {
+                case "up":
+                    return true;
+                case "down":
+                    return true;
+                case "left":
+                    return true;
+                case "right":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        public Ship ConvertStringToShip(string whatToConvert)
+        {
+            switch (whatToConvert)
+            {
+                case "destroyer":
+                    return new Destroyer();
+                case "submarine":
+                    return new Submarine();
+                case "battleship":
+                    return new Battleship();
+                case "aircraft carrier":
+                    return new Carrier();
+                default:
+                    return new Destroyer();
+            }
+        }
     }
 }

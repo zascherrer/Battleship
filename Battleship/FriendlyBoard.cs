@@ -9,14 +9,14 @@ namespace Battleship
     class FriendlyBoard : GameBoard
     {
         //variables
-        public char ship;
 
         //constructor
         public FriendlyBoard()
         {
-            ship = 'N';
+            
         }
 
         //methods
+        
     }
 }
