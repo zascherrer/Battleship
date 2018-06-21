@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Battleship
 {
-    class EnemyBoard
+    class EnemyBoard : GameBoard
     {
         //variables
         public char destroyedShip;

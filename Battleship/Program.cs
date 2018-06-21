@@ -11,6 +11,8 @@ namespace Battleship
         static void Main(string[] args)
         {
             GameMaster game = new GameMaster(true);
+
+            game.RunGame();
         }
     }
 }

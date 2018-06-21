@@ -32,7 +32,9 @@ namespace Battleship
         //methods
         public void RunGame()
         {
+            playerOne.playerBoards[0].DisplayBoard();
 
+            Console.ReadLine();                     //Just here to pause the end game
         }
     }
 }
