@@ -168,8 +168,6 @@ namespace Battleship
             int[] coordinates = new int[2];
             coordinates = ConvertCoordinatesToIndex(coordinatesChar);
 
-            bool isShipInWay;
-
             switch (direction)
             {
                 case "up":

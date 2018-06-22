@@ -9,7 +9,8 @@ namespace Battleship
     public abstract class Player
     {
         //variables
-        public GameBoard[] playerBoards;
+        public GameBoard friendlyBoard;
+        public GameBoard enemyBoard;
         public List<Ship> ships;
         public string name;
         
@@ -18,9 +19,8 @@ namespace Battleship
         {
             name = "Default_Name";
 
-            playerBoards = new GameBoard[2];
-            playerBoards[0] = new GameBoard();
-            playerBoards[1] = new GameBoard();
+            friendlyBoard = new GameBoard();
+            enemyBoard = new GameBoard();
 
             ships = new List<Ship>() { new Destroyer(), new Submarine(), new Battleship(), new Carrier()};
         }
@@ -98,7 +98,7 @@ namespace Battleship
             bool isValidDirection = false;
 
             Console.WriteLine("\n\nWhere would you like to place the ship? Type the X-coordinate followed by the Y-coordinate of where you want to place one end of the ship.\n\n");
-            coordinates = GetCoordinates(playerBoards[0]);
+            coordinates = GetCoordinates(friendlyBoard);
 
             while (!isValidDirection)
             {
@@ -106,7 +106,7 @@ namespace Battleship
                 chosenDirection = Console.ReadLine().ToLower();
                 if (ValidateDirection(chosenDirection))
                 {
-                    if (playerBoards[0].FindIfShipFits(coordinates, chosenDirection, ConvertStringToShip(shipChosen).size))
+                    if (friendlyBoard.FindIfShipFits(coordinates, chosenDirection, ConvertStringToShip(shipChosen).size))
                     {
                         isValidDirection = true;
                     }
