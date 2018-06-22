@@ -292,5 +292,35 @@ namespace Battleship
                     return true;
             }
         }
+
+        public bool MarkHitOrMiss(char[] coordinatesChar, bool isHit = false)
+        {
+            int[] coordinates = new int[2];
+            coordinates = ConvertCoordinatesToIndex(coordinatesChar);
+
+            if (isHit)
+            {
+                board[coordinates[0], coordinates[1]] = hit;
+                return true;
+            }
+            else
+            {
+                if(board[coordinates[0], coordinates[1]] == ship)
+                {
+                    board[coordinates[0], coordinates[1]] = hit;
+                    return true;
+                }
+                else if(board[coordinates[0], coordinates[1]] == hit || board[coordinates[0], coordinates[1]] == miss)
+                {
+                    Console.WriteLine("\n\nYou already shot there!\n\n");
+                    return false;
+                }
+                else
+                {
+                    board[coordinates[0], coordinates[1]] = miss;
+                    return false;
+                }
+            }
+        }
     }
 }

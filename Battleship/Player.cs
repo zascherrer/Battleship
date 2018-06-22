@@ -13,11 +13,15 @@ namespace Battleship
         public GameBoard enemyBoard;
         public List<Ship> ships;
         public string name;
+        public bool winsGame;
+        public int hitsLeftToWin;
         
         //constructor
         public Player()
         {
             name = "Default_Name";
+            winsGame = false;
+            hitsLeftToWin = 9;
 
             friendlyBoard = new GameBoard();
             enemyBoard = new GameBoard();
@@ -161,6 +165,18 @@ namespace Battleship
                 default:
                     return new Destroyer();
             }
+        }
+
+        public void BeginPlayerTurn()
+        {
+            Console.Clear();
+            Console.WriteLine("It's {0}'s turn! Press Enter when you're ready to display your boards:", name);
+            Console.ReadLine();
+
+            Console.WriteLine("\n\nEnemy Board:");
+            enemyBoard.DisplayBoard();
+            Console.WriteLine("\n\nFriendly Board:");
+            friendlyBoard.DisplayBoard();
         }
     }
 }
