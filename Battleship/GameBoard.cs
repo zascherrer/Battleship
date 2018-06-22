@@ -15,7 +15,7 @@ namespace Battleship
         public char hit;
         public char miss;
         public char ship;
-        char[,] board;
+        public char[,] board;
 
         //constructor
         public GameBoard()

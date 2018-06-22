@@ -98,11 +98,26 @@ namespace Battleship
         public void PlaceShipOnBoard(string shipChosen)
         {
             char[] coordinates = new char[2];
+            int[] coordinatesInt = new int[2];
             string chosenDirection;
+            bool isValidSpot = false;
             bool isValidDirection = false;
 
-            Console.WriteLine("\n\nWhere would you like to place the ship? Type the X-coordinate followed by the Y-coordinate of where you want to place one end of the ship.\n\n");
-            coordinates = GetCoordinates(friendlyBoard);
+            while (!isValidSpot)
+            {
+                Console.WriteLine("\n\nWhere would you like to place the ship? Type the X-coordinate followed by the Y-coordinate of where you want to place one end of the ship.\n\n");
+                coordinates = GetCoordinates(friendlyBoard);
+                coordinatesInt = friendlyBoard.ConvertCoordinatesToIndex(coordinates);
+
+                if(friendlyBoard.board[coordinatesInt[0], coordinatesInt[1]] != friendlyBoard.ship)
+                {
+                    isValidSpot = true;
+                }
+                else
+                {
+                    Console.WriteLine("You've already placed a ship there!");
+                }
+            }
 
             while (!isValidDirection)
             {
@@ -127,8 +142,8 @@ namespace Battleship
             char[] coordinates = new char[2];
 
             board.DisplayBoard();
-            coordinates[0] = Console.ReadLine()[0];
-            coordinates[1] = Console.ReadLine()[0];
+            coordinates[0] = Console.ReadLine().ToLower()[0];
+            coordinates[1] = Console.ReadLine().ToLower()[0];
 
             return coordinates;
         }
