@@ -45,8 +45,6 @@
     <Compile Include="Battleship.cs" />
     <Compile Include="Carrier.cs" />
     <Compile Include="Destroyer.cs" />
-    <Compile Include="EnemyBoard.cs" />
-    <Compile Include="FriendlyBoard.cs" />
     <Compile Include="GameBoard.cs" />
     <Compile Include="GameMaster.cs" />
     <Compile Include="Human.cs" />

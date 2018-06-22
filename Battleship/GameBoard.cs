@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Battleship
 {
-    public abstract class GameBoard
+    public class GameBoard
     {
         //variables
         public int sizeX;
@@ -168,37 +168,17 @@ namespace Battleship
             int[] coordinates = new int[2];
             coordinates = ConvertCoordinatesToIndex(coordinatesChar);
 
+            bool isShipInWay;
+
             switch (direction)
             {
                 case "up":
-                    if (coordinates[1] - (shipSize - 1) >= 0)
-                    {
-                        for(int i = 0; i < shipSize; i++)
-                        {
-                            board[coordinates[0], coordinates[1] - i] = ship;
-                        }
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                case "down":
-                    if (coordinates[1] + (shipSize - 1) < sizeY)
-                    {
-                        for (int i = 0; i < shipSize; i++)
-                        {
-                            board[coordinates[0], coordinates[1] + i] = ship;
-                        }
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                case "left":
                     if (coordinates[0] - (shipSize - 1) >= 0)
                     {
+                        if(CheckForShipInWay(coordinates, direction, shipSize))
+                        {
+                            return false;
+                        }
                         for (int i = 0; i < shipSize; i++)
                         {
                             board[coordinates[0] - i, coordinates[1]] = ship;
@@ -209,9 +189,13 @@ namespace Battleship
                     {
                         return false;
                     }
-                case "right":
-                    if (coordinates[0] + (shipSize - 1) < sizeX)
+                case "down":
+                    if (coordinates[0] + (shipSize - 1) < sizeY)
                     {
+                        if (CheckForShipInWay(coordinates, direction, shipSize))
+                        {
+                            return false;
+                        }
                         for (int i = 0; i < shipSize; i++)
                         {
                             board[coordinates[0] + i, coordinates[1]] = ship;
@@ -222,9 +206,92 @@ namespace Battleship
                     {
                         return false;
                     }
+                case "left":
+                    if (coordinates[1] - (shipSize - 1) >= 0)
+                    {
+                        if (CheckForShipInWay(coordinates, direction, shipSize))
+                        {
+                            return false;
+                        }
+                        for (int i = 0; i < shipSize; i++)
+                        {
+                            board[coordinates[0], coordinates[1] - i] = ship;
+                        }
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case "right":
+                    if (coordinates[1] + (shipSize - 1) < sizeX)
+                    {
+                        if (CheckForShipInWay(coordinates, direction, shipSize))
+                        {
+                            return false;
+                        }
+                        for (int i = 0; i < shipSize; i++)
+                        {
+                            board[coordinates[0], coordinates[1] + i] = ship;
+                        }
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 default:
                     Console.WriteLine("\n\nDirection was invalid.\n\n");
                     return false;
+            }
+        }
+
+        public bool CheckForShipInWay(int[] coordinates, string direction, int shipSize)
+        {
+            switch (direction)
+            {
+                case "up":
+                    for (int i = 0; i < shipSize; i++)
+                    {
+                        if (board[coordinates[0] - i, coordinates[1]] == ship)
+                        {
+                            Console.WriteLine("There's another ship in the way!");
+                            return true;
+                        }
+                    }
+                    return false;
+                case "down":
+                    for (int i = 0; i < shipSize; i++)
+                    {
+                        if (board[coordinates[0] + i, coordinates[1]] == ship)
+                        {
+                            Console.WriteLine("There's another ship in the way!");
+                            return true;
+                        }
+                    }
+                    return false;
+                case "left":
+                    for (int i = 0; i < shipSize; i++)
+                    {
+                        if (board[coordinates[0], coordinates[1] - i] == ship)
+                        {
+                            Console.WriteLine("There's another ship in the way!");
+                            return true;
+                        }
+                    }
+                    return false;
+                case "right":
+                    for (int i = 0; i < shipSize; i++)
+                    {
+                        if (board[coordinates[0], coordinates[1] + i] == ship)
+                        {
+                            Console.WriteLine("There's another ship in the way!");
+                            return true;
+                        }
+                    }
+                    return false;
+                default:
+                    return true;
             }
         }
     }

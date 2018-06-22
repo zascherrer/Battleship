@@ -19,8 +19,8 @@ namespace Battleship
             name = "Default_Name";
 
             playerBoards = new GameBoard[2];
-            playerBoards[0] = new FriendlyBoard();
-            playerBoards[1] = new EnemyBoard();
+            playerBoards[0] = new GameBoard();
+            playerBoards[1] = new GameBoard();
 
             ships = new List<Ship>() { new Destroyer(), new Submarine(), new Battleship(), new Carrier()};
         }
